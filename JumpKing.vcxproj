@@ -147,10 +147,12 @@
     <ClCompile Include="BaseObject.c" />
     <ClCompile Include="MainObject.c" />
     <ClCompile Include="ImpTimer.c" />
+    <ClCompile Include="game_map.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="BaseObject.h" />
+    <ClInclude Include="game_map.h" />
     <ClInclude Include="ImpTimer.h" />
     <ClInclude Include="MainObject.h" />
   </ItemGroup>

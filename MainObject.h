@@ -13,6 +13,18 @@ typedef struct sMainObject MainObject;
 struct sMainObject {
 	BaseObject base_object;
 
+	void (*Init)(MainObject*);
+	void (*Destroy)(MainObject*);
+	bool (*LoadImg)(MainObject*, const char*, SDL_Renderer*);
+	void (*Show)(MainObject*, SDL_Renderer* des);
+	void (*HandleInputAction)(MainObject*, SDL_Event, SDL_Renderer*);
+	void (*set_clips)(MainObject*);
+	void (*DoPlayer)(MainObject*, Map*);
+	void (*CheckToMap)(MainObject*, Map*);
+	void (*SetMapXY)(MainObject*, const int, const int);
+	void (*CenterEntityOnMap)(MainObject*, Map*);
+	void (*UpdateImagePlayer)(MainObject*, SDL_Renderer*);
+
 	int money_count;
 	//BulletObject** p_bullet_list_;
 
@@ -52,8 +64,8 @@ enum WalkType {
 	FALL_RIGHT = 9
 };
 
-void MainObject_Init(MainObject* obj);
-void MainObject_Cleanup(MainObject* obj);
+MainObject MainObject_Create();
+void MainObject_Destroy(MainObject* obj);
 bool MainObject_LoadImg(MainObject* obj, const char* path, SDL_Renderer* screen);
 void MainObject_Show(MainObject* obj, SDL_Renderer* des);
 void MainObject_HandleInputAction(MainObject* obj, SDL_Event events, SDL_Renderer* screen);

@@ -1,40 +1,66 @@
 #include "MainObject.h"
-
-MainObject a;
  
-void MainObject_Init(MainObject* obj) {
-    obj->frame_ = 0;
-    obj->x_pos_ = 0;
-    obj->y_pos_ = 0;
-    obj->x_val_ = 0;
-    obj->y_val_ = 0;
-    obj->width_frame_ = 0;
-    obj->height_frame_ = 0;
-    obj->status_ = WALK_NONE;
-    obj->input_type_.right_ = 0;
-    obj->input_type_.left_ = 0;
-    obj->input_type_.jump_ = 0;
-    obj->input_type_.down_ = 0;
-    obj->input_type_.up_ = 0;
-    obj->on_ground_ = false;
-    obj->map_x_ = 0;
-    obj->map_y_ = 0;
-    obj->come_back_time_ = 0;
-    //obj->present_bullet_ = BulletObject_SPHERE_BULLET;
-    obj->money_count = 0;
+#include "MainObject.h"
+
+MainObject MainObject_Create() {
+
+	MainObject obj;
+	obj.base_object = BaseObject_Create();
+	obj.frame_ = 0;
+	obj.x_pos_ = 0;
+	obj.y_pos_ = 0;
+	obj.x_val_ = 0;
+	obj.y_val_ = 0;
+	obj.width_frame_ = 0;
+	obj.height_frame_ = 0;
+	obj.status_ = WALK_NONE;
+	obj.input_type_.right_ = 0;
+	obj.input_type_.left_ = 0;
+	obj.input_type_.jump_ = 0;
+	obj.input_type_.down_ = 0;
+	obj.input_type_.up_ = 0;
+	obj.on_ground_ = false;
+	obj.map_x_ = 0;
+	obj.map_y_ = 0;
+	obj.come_back_time_ = 0;
+	//obj.present_bullet_ = BulletObject_SPHERE_BULLET;
+	obj.money_count = 0;
+
+	obj.Destroy = MainObject_Destroy;
+	obj.LoadImg = MainObject_LoadImg;
+	obj.Show = MainObject_Show;
+	obj.HandleInputAction = MainObject_HandleInputAction;
+	obj.set_clips = MainObject_SetClips;
+	obj.DoPlayer = MainObject_DoPlayer;
+	obj.CheckToMap = MainObject_CheckToMap;
+	obj.SetMapXY = MainObject_SetMapXY;
+	obj.CenterEntityOnMap = MainObject_CenterEntityOnMap;
+	obj.UpdateImagePlayer = MainObject_UpdateImagePlayer;
+	return obj;
 }
 
-void MainObject_Cleanup(MainObject* obj) {
-    /*if (obj->p_bullet_list_ != NULL) {
-        free(obj->p_bullet_list_);
-        obj->p_bullet_list_ = NULL;
-    }*/
+void MainObject_Destroy(MainObject* obj) {
+	if (obj) {
+		/*if (main_object->p_bullet_list) {
+			for (int i = 0; i < main_object->bullet_list_size; i++) {
+				BulletObject_Destroy(main_object->p_bullet_list[i]);
+			}
+			free(main_object->p_bullet_list);
+		}*/
+		obj->base_object.Free(&obj->base_object);
+		obj->base_object.Destroy(&obj->base_object);
+		free(obj);
+	}
+}
 
-    free(obj);
+void MainObject_SetMapXY(MainObject* obj, const int map_x, const int map_y)
+{
+	obj->map_x_ = map_x;
+	obj->map_y_ = map_y;
 }
 
 bool MainObject_LoadImg(MainObject* obj, const char* path, SDL_Renderer* screen) {
-    bool ret = BaseObject_LoadImg(&(obj->base_object), path, screen);
+    bool ret = obj->base_object.LoadImg(&(obj->base_object), path, screen);
     obj->base_object.rect_.x;
 
 
@@ -45,7 +71,7 @@ bool MainObject_LoadImg(MainObject* obj, const char* path, SDL_Renderer* screen)
     return ret;
 }
 
-void MainObject_set_clips(MainObject* obj)
+void MainObject_SetClips(MainObject* obj)
 {
 	if (obj->width_frame_ > 0 && obj->height_frame_ > 0)
 	{
@@ -60,7 +86,7 @@ void MainObject_set_clips(MainObject* obj)
 }
 
 void MainObject_Show(MainObject* obj, SDL_Renderer* des) {
-	MainObject_UpdateImagePlayer(obj, des);
+	obj->UpdateImagePlayer(obj, des);
 	if (obj->input_type_.left_ == 1 ||
 		obj->input_type_.right_ == 1) {
 		obj->frame_++;
@@ -190,8 +216,8 @@ void MainObject_DoPlayer(MainObject* obj, Map* map_data) {
 			obj->input_type_.jump_ = 0;
 		}
 
-		MainObject_CheckToMap(obj, map_data);
-		//CenterEntityOnMap(map_data);
+		obj->CheckToMap(obj, map_data);
+		obj->CenterEntityOnMap(obj, map_data);
 	}
 	if (obj->come_back_time_ > 0) {
 		obj->come_back_time_--;
@@ -210,23 +236,23 @@ void MainObject_DoPlayer(MainObject* obj, Map* map_data) {
 	}
 }
 
-//void MainObject_CenterEntityOnMap(MainObject* obj, Map* map_data) {
-//	map_data.start_x_ = x_pos_ - (SCREEN_WIDTH / 2);
-//	if (map_data.start_x_ < 0) {
-//		map_data.start_x_ = 0;
-//	}
-//	else if (map_data.start_x_ + SCREEN_WIDTH >= map_data.max_x_) {
-//		map_data.start_x_ = map_data.max_x_ - SCREEN_WIDTH;
-//	}
-//
-//	map_data.start_y_ = y_pos_ - (SCREEN_HEIGHT / 2);
-//	if (map_data.start_y_ < 0) {
-//		map_data.start_y_ = 0;
-//	}
-//	else if (map_data.start_y_ + SCREEN_HEIGHT >= map_data.max_y_) {
-//		map_data.start_y_ = map_data.max_y_ - SCREEN_HEIGHT;
-//	}
-//}
+void MainObject_CenterEntityOnMap(MainObject* obj, Map* map_data) {
+	map_data->start_x_ = obj->x_pos_ - (SCREEN_WIDTH / 2);
+	if (map_data->start_x_ < 0) {
+		map_data->start_x_ = 0;
+	}
+	else if (map_data->start_x_ + SCREEN_WIDTH >= map_data->max_x_) {
+		map_data->start_x_ = map_data->max_x_ - SCREEN_WIDTH;
+	}
+
+	map_data->start_y_ = obj->y_pos_ - (SCREEN_HEIGHT / 2);
+	if (map_data->start_y_ < 0) {
+		map_data->start_y_ = 0;
+	}
+	else if (map_data->start_y_ + SCREEN_HEIGHT >= map_data->max_y_) {
+		map_data->start_y_ = map_data->max_y_ - SCREEN_HEIGHT;
+	}
+}
 
 void MainObject_CheckToMap(MainObject* obj, Map* map_data) {
 	int x1 = 0;
@@ -351,18 +377,18 @@ void MainObject_IncreaseMoney(MainObject* obj) {
 void MainObject_UpdateImagePlayer(MainObject* obj, SDL_Renderer* des) {
 	if (obj->on_ground_) {
 		if (obj->status_ == WALK_LEFT) {
-			BaseObject_LoadImg(&obj->base_object, "img/player sprite/player_left.png", des);
+			obj->base_object.LoadImg(&obj->base_object, "img/player sprite/player_left.png", des);
 		}
 		else {
-			BaseObject_LoadImg(&obj->base_object, "img/player sprite/player_right.png", des);
+			obj->base_object.LoadImg(&obj->base_object, "img/player sprite/player_right.png", des);
 		}
 	}
 	else {
 		if (obj->status_ == WALK_LEFT) {
-			BaseObject_LoadImg(&obj->base_object, "img/player sprite/jum_left.png", des);
+			obj->base_object.LoadImg(&obj->base_object, "img/player sprite/jum_left.png", des);
 		}
 		else {
-			BaseObject_LoadImg(&obj->base_object, "img/player sprite/jum_right.png", des);
+			obj->base_object.LoadImg(&obj->base_object, "img/player sprite/jum_right.png", des);
 		}
 	}
 }

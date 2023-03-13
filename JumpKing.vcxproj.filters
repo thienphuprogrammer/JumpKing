@@ -30,6 +30,9 @@
     <ClCompile Include="ImpTimer.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game_map.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonFunction.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ImpTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game_map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

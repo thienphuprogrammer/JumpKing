@@ -3,20 +3,22 @@
 
 #include "CommonFunction.h"
 
-typedef struct {
+typedef struct sBaseObject BaseObject;
+struct sBaseObject
+{
 	SDL_Texture* p_object_;
 	SDL_Rect rect_;
 
-	void (*Destroy)(BaseObject*);
-	void (*SetRect)(BaseObject*, const int, const int);
-	SDL_Rect (*GetRect)(const BaseObject*);
-	SDL_Texture* (*GetObject)(const BaseObject*);
-	bool (*LoadImg)(BaseObject*, const char*, SDL_Renderer*);
-	void (*Render)(BaseObject*, SDL_Renderer*, const SDL_Rect*);
-	void (*Free)(BaseObject*);
-} BaseObject;
+	void (*Destroy) (BaseObject*);
+	void (*SetRect) (BaseObject*, const int, const int);
+	SDL_Rect(*GetRect) (const BaseObject*);
+	SDL_Texture* (*GetObject) (const BaseObject*);
+	bool (*LoadImg) (BaseObject*, const char*, SDL_Renderer*);
+	void (*Render) (BaseObject*, SDL_Renderer*, const SDL_Rect*);
+	void (*Free) (BaseObject*);
+};
 
-BaseObject* BaseObject_Create();
+BaseObject BaseObject_Create();
 void BaseObject_Destroy(BaseObject* obj);
 void BaseObject_SetRect(BaseObject* obj, const int x, const int y);
 SDL_Rect BaseObject_GetRect(const BaseObject* obj);
