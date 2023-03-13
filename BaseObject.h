@@ -6,6 +6,14 @@
 typedef struct {
 	SDL_Texture* p_object_;
 	SDL_Rect rect_;
+
+	void (*Destroy)(BaseObject*);
+	void (*SetRect)(BaseObject*, const int, const int);
+	SDL_Rect (*GetRect)(const BaseObject*);
+	SDL_Texture* (*GetObject)(const BaseObject*);
+	bool (*LoadImg)(BaseObject*, const char*, SDL_Renderer*);
+	void (*Render)(BaseObject*, SDL_Renderer*, const SDL_Rect*);
+	void (*Free)(BaseObject*);
 } BaseObject;
 
 BaseObject* BaseObject_Create();

@@ -9,6 +9,14 @@ BaseObject* BaseObject_Create()
 	obj->rect_.y = 0;
 	obj->rect_.w = 0;
 	obj->rect_.h = 0;
+
+	obj->Destroy = BaseObject_Destroy;
+	obj->SetRect= BaseObject_SetRect;
+	obj->GetRect= BaseObject_GetRect;
+	obj->GetObject= BaseObject_GetObject;
+	obj->LoadImg= BaseObject_LoadImg;
+	obj->Render= BaseObject_Render;
+	obj->Free= BaseObject_Free;
 	return obj;
 }
 
