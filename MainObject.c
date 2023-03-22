@@ -25,6 +25,7 @@ MainObject MainObject_Create() {
 	obj.come_back_time_ = 0;
 	//obj.present_bullet_ = BulletObject_SPHERE_BULLET;
 	obj.money_count = 0;
+	obj.jump_val_ = PLAYER_MIN_JUMP_VAL;
 
 	obj.Destroy = MainObject_Destroy;
 	obj.LoadImg = MainObject_LoadImg;
@@ -41,15 +42,8 @@ MainObject MainObject_Create() {
 
 void MainObject_Destroy(MainObject* obj) {
 	if (obj) {
-		/*if (main_object->p_bullet_list) {
-			for (int i = 0; i < main_object->bullet_list_size; i++) {
-				BulletObject_Destroy(main_object->p_bullet_list[i]);
-			}
-			free(main_object->p_bullet_list);
-		}*/
 		obj->base_object.Free(&obj->base_object);
 		obj->base_object.Destroy(&obj->base_object);
-		free(obj);
 	}
 }
 
@@ -116,15 +110,24 @@ void MainObject_HandleInputAction(MainObject* obj, SDL_Event events, SDL_Rendere
 	if (events.type == SDL_KEYDOWN) {
 		switch (events.key.keysym.sym)
 		{
-		case SDLK_d:
+		case SDLK_SPACE:
+			obj->jump_val_ += 0.5;
+			if (obj->jump_val_ >= PLAYER_MAX_JUMP_VAL)
+			{
+				obj->jump_val_ = PLAYER_MAX_JUMP_VAL;
+			}
+			break;
+		case SDLK_RIGHT:
 			obj->status_ = WALK_RIGHT;
 			obj->input_type_.right_ = 1;
 			obj->input_type_.left_ = 0;
 			break;
-		case SDLK_a:
+		case SDLK_LEFT:
 			obj->status_ = WALK_LEFT;
 			obj->input_type_.left_ = 1;
 			obj->input_type_.right_ = 0;
+			break;
+		
 		case SDLK_1:
 			//obj->present_bullet_ = BulletObject::SPHERE_BULLET;
 			break;
@@ -138,11 +141,14 @@ void MainObject_HandleInputAction(MainObject* obj, SDL_Event events, SDL_Rendere
 	else if (events.type == SDL_KEYUP) {
 		switch (events.key.keysym.sym)
 		{
-		case SDLK_d:
+		case SDLK_RIGHT:
 			obj->input_type_.right_ = 0;
 			break;
-		case SDLK_a:
+		case SDLK_LEFT:
 			obj->input_type_.left_ = 0;
+			break;
+		case SDLK_SPACE:
+			obj->input_type_.jump_ = 1;
 			break;
 		default:
 			break;
@@ -210,8 +216,9 @@ void MainObject_DoPlayer(MainObject* obj, Map* map_data) {
 
 		if (obj->input_type_.jump_ == 1) {
 			if (obj->on_ground_ == true) {
-				obj->y_val_ = -PLAYER_JUMP_VAL;
+				obj->y_val_ = -obj->jump_val_;
 				obj->on_ground_ = false;
+				obj->jump_val_ = PLAYER_MIN_JUMP_VAL;
 			}
 			obj->input_type_.jump_ = 0;
 		}

@@ -19,6 +19,7 @@ struct sGameMap
     Map game_map_;
     TileMat tile_mat[MAX_TILES];
 
+    void (*Destroy) (GameMap*);
     void (*LoadMap) (GameMap*, char*);
     void (*LoadTiles) (GameMap*, SDL_Renderer*);
     void (*DrawMap) (GameMap*, SDL_Renderer*);

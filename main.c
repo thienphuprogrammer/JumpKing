@@ -85,6 +85,7 @@ int main(int argc, char* argv[]) {
     while (!is_quit)
     {
         fps_timer.start(&fps_timer);
+
         while (SDL_PollEvent(&g_event) != 0)
         {
             if (g_event.type == SDL_QUIT)
@@ -122,5 +123,7 @@ int main(int argc, char* argv[]) {
         }
     }
     close();
+    p_player.Destroy(&p_player);
+    game_map.Destroy(&game_map);
     return 0;
 }

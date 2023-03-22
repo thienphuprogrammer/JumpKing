@@ -7,13 +7,13 @@
 #define GRAVITY_SPEED 0.8
 #define MAX_FALL_SPEED 10
 #define PLAYER_SPEED 8
-#define PLAYER_JUMP_VAL 19
+#define PLAYER_MAX_JUMP_VAL 19
+#define PLAYER_MIN_JUMP_VAL 10
 
 typedef struct sMainObject MainObject;
 struct sMainObject {
 	BaseObject base_object;
 
-	void (*Init)(MainObject*);
 	void (*Destroy)(MainObject*);
 	bool (*LoadImg)(MainObject*, const char*, SDL_Renderer*);
 	void (*Show)(MainObject*, SDL_Renderer* des);
@@ -50,6 +50,8 @@ struct sMainObject {
 	int come_back_time_;
 
 	int present_bullet_;
+
+	float jump_val_;
 };
 
 enum WalkType {

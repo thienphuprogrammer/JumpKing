@@ -6,6 +6,8 @@ GameMap GameMap_Create()
     for (int i = 0; i < MAX_TILES; i++) {
         obj.tile_mat[i].base_object = BaseObject_Create();
     }
+    obj.Destroy = GameMap_Destroy;
+
     obj.LoadMap = GameMap_LoadMap;
     obj.LoadTiles = GameMap_LoadTiles;
     obj.DrawMap = GameMap_DrawMap;
@@ -24,7 +26,6 @@ void GameMap_Destroy(GameMap* obj)
 
             }
         }
-        free(obj);
     }
 }
 

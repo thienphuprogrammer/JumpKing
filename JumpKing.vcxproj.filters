@@ -13,42 +13,48 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Header">
+      <UniqueIdentifier>{d58b9244-5204-4f9f-a696-66ed13431217}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Source">
+      <UniqueIdentifier>{fd818a1e-1dfc-4a1e-905b-ce51892d3ba9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="BaseObject.c">
+      <Filter>Source Files\Source</Filter>
     </ClCompile>
     <ClCompile Include="CommonFunction.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseObject.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MainObject.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ImpTimer.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Source</Filter>
     </ClCompile>
     <ClCompile Include="game_map.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ImpTimer.c">
+      <Filter>Source Files\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="main.c">
+      <Filter>Source Files\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="MainObject.c">
+      <Filter>Source Files\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CommonFunction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BaseObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Header</Filter>
     </ClInclude>
-    <ClInclude Include="MainObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ImpTimer.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="CommonFunction.h">
+      <Filter>Header Files\Header</Filter>
     </ClInclude>
     <ClInclude Include="game_map.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ImpTimer.h">
+      <Filter>Header Files\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="MainObject.h">
+      <Filter>Header Files\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

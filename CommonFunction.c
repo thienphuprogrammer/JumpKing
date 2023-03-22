@@ -1,7 +1,7 @@
 #include "CommonFunction.h"
 
 const int FRAME_PER_SECOND = 55;
-const int SCREEN_WIDTH = 1280;
+const int SCREEN_WIDTH = 1200;
 const int SCREEN_HEIGHT = 640;
 const int SCREEN_BPP = 32;
 

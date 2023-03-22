@@ -13,6 +13,7 @@ struct sBaseObject
 	void (*SetRect) (BaseObject*, const int, const int);
 	SDL_Rect(*GetRect) (const BaseObject*);
 	SDL_Texture* (*GetObject) (const BaseObject*);
+
 	bool (*LoadImg) (BaseObject*, const char*, SDL_Renderer*);
 	void (*Render) (BaseObject*, SDL_Renderer*, const SDL_Rect*);
 	void (*Free) (BaseObject*);
